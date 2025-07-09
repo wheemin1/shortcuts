@@ -10,7 +10,7 @@ import { useSearch } from "@/hooks/use-search";
 import { Loader2 } from "lucide-react";
 
 export default function Home() {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedOS, setSelectedOS] = useState<string[]>(["windows", "macos", "linux"]);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
@@ -25,9 +25,16 @@ export default function Home() {
   // Dark mode management
   useEffect(() => {
     const savedMode = localStorage.getItem("darkMode");
-    if (savedMode === "true") {
+    if (savedMode === null) {
+      // First time visit - set dark mode as default
       setIsDarkMode(true);
       document.documentElement.classList.add("dark");
+      localStorage.setItem("darkMode", "true");
+    } else if (savedMode === "true") {
+      setIsDarkMode(true);
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
     }
   }, []);
 
