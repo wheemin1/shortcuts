@@ -1,8 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import type { Shortcut } from "@shared/schema";
-
-// Static data fallback for production deployment
-const STATIC_SHORTCUTS: Shortcut[] = [
+// Static shortcuts data for client-side use
+export const ALL_SHORTCUTS = [
+  // Windows shortcuts
   {
     id: 1,
     tool: "Windows",
@@ -20,7 +18,7 @@ const STATIC_SHORTCUTS: Shortcut[] = [
   {
     id: 2,
     tool: "Windows",
-    category: "os", 
+    category: "os",
     title: "붙여넣기",
     description: "복사한 항목 붙여넣기",
     windowsShortcut: "Ctrl+V",
@@ -103,6 +101,50 @@ const STATIC_SHORTCUTS: Shortcut[] = [
   },
   {
     id: 8,
+    tool: "Windows",
+    category: "os",
+    title: "열기",
+    description: "파일 열기",
+    windowsShortcut: "Ctrl+O",
+    macosShortcut: "Cmd+O",
+    linuxShortcut: "Ctrl+O",
+    popularity: 85,
+    verified: true,
+    aliases: ["open", "열기"],
+    tags: ["open", "file"]
+  },
+  {
+    id: 9,
+    tool: "Windows",
+    category: "os",
+    title: "새로 만들기",
+    description: "새 문서 만들기",
+    windowsShortcut: "Ctrl+N",
+    macosShortcut: "Cmd+N",
+    linuxShortcut: "Ctrl+N",
+    popularity: 80,
+    verified: true,
+    aliases: ["new", "새로만들기"],
+    tags: ["new", "create"]
+  },
+  {
+    id: 10,
+    tool: "Windows",
+    category: "os",
+    title: "인쇄",
+    description: "현재 문서 인쇄",
+    windowsShortcut: "Ctrl+P",
+    macosShortcut: "Cmd+P",
+    linuxShortcut: "Ctrl+P",
+    popularity: 80,
+    verified: true,
+    aliases: ["print", "인쇄"],
+    tags: ["print", "document"]
+  },
+  // Add more shortcuts here...
+  // For demo purposes, I'll add just a few key ones
+  {
+    id: 11,
     tool: "Google Chrome",
     category: "browser",
     title: "새 탭",
@@ -116,7 +158,21 @@ const STATIC_SHORTCUTS: Shortcut[] = [
     tags: ["tab", "new"]
   },
   {
-    id: 9,
+    id: 12,
+    tool: "Google Chrome",
+    category: "browser",
+    title: "새 창",
+    description: "새 창 열기",
+    windowsShortcut: "Ctrl+N",
+    macosShortcut: "Cmd+N",
+    linuxShortcut: "Ctrl+N",
+    popularity: 85,
+    verified: true,
+    aliases: ["new window", "새창"],
+    tags: ["window", "new"]
+  },
+  {
+    id: 13,
     tool: "Visual Studio Code",
     category: "ide",
     title: "명령 팔레트",
@@ -130,7 +186,21 @@ const STATIC_SHORTCUTS: Shortcut[] = [
     tags: ["command", "palette"]
   },
   {
-    id: 10,
+    id: 14,
+    tool: "Visual Studio Code",
+    category: "ide",
+    title: "파일 빠른 열기",
+    description: "파일 빠른 열기",
+    windowsShortcut: "Ctrl+P",
+    macosShortcut: "Cmd+P",
+    linuxShortcut: "Ctrl+P",
+    popularity: 90,
+    verified: true,
+    aliases: ["quick open", "빠른열기"],
+    tags: ["file", "open"]
+  },
+  {
+    id: 15,
     tool: "Microsoft Excel",
     category: "office",
     title: "자동 합계",
@@ -145,99 +215,37 @@ const STATIC_SHORTCUTS: Shortcut[] = [
   }
 ];
 
-export function useShortcuts() {
-  return useQuery<Shortcut[]>({
-    queryKey: ["/api/shortcuts"],
-    queryFn: async () => {
-      // Try to fetch from API first, fallback to static data
-      try {
-        const response = await fetch("/api/shortcuts");
-        if (!response.ok) {
-          throw new Error("API not available");
-        }
-        return response.json();
-      } catch (error) {
-        // Return static data for production deployment
-        return STATIC_SHORTCUTS;
-      }
-    },
-  });
+// Export types for consistency
+export interface Shortcut {
+  id: number;
+  tool: string;
+  category: string;
+  title: string;
+  description: string;
+  windowsShortcut: string | null;
+  macosShortcut: string | null;
+  linuxShortcut: string | null;
+  popularity: number;
+  verified: boolean;
+  aliases: string[];
+  tags: string[];
 }
 
-export function useShortcutsByCategory(category: string) {
-  return useQuery<Shortcut[]>({
-    queryKey: ["/api/shortcuts/category", category],
-    queryFn: async () => {
-      try {
-        const response = await fetch(`/api/shortcuts/category/${category}`);
-        if (!response.ok) {
-          throw new Error("API not available");
-        }
-        return response.json();
-      } catch (error) {
-        return STATIC_SHORTCUTS.filter(s => s.category === category);
-      }
-    },
-    enabled: !!category,
-  });
-}
-
-export function useShortcutsByTool(tool: string) {
-  return useQuery<Shortcut[]>({
-    queryKey: ["/api/shortcuts/tool", tool],
-    queryFn: async () => {
-      try {
-        const response = await fetch(`/api/shortcuts/tool/${encodeURIComponent(tool)}`);
-        if (!response.ok) {
-          throw new Error("API not available");
-        }
-        return response.json();
-      } catch (error) {
-        return STATIC_SHORTCUTS.filter(s => s.tool === tool);
-      }
-    },
-    enabled: !!tool,
-  });
-}
-
-export function useSearchShortcuts(query: string) {
-  return useQuery<Shortcut[]>({
-    queryKey: ["/api/shortcuts/search", query],
-    queryFn: async () => {
-      try {
-        const response = await fetch(`/api/shortcuts/search?q=${encodeURIComponent(query)}`);
-        if (!response.ok) {
-          throw new Error("API not available");
-        }
-        return response.json();
-      } catch (error) {
-        const lowerQuery = query.toLowerCase();
-        return STATIC_SHORTCUTS.filter(s => 
-          s.title.toLowerCase().includes(lowerQuery) ||
-          s.description.toLowerCase().includes(lowerQuery) ||
-          s.tool.toLowerCase().includes(lowerQuery) ||
-          s.aliases.some(alias => alias.toLowerCase().includes(lowerQuery)) ||
-          s.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
-        );
-      }
-    },
-    enabled: !!query && query.length > 0,
-  });
-}
-
-export function usePopularShortcuts(limit: number = 10) {
-  return useQuery<Shortcut[]>({
-    queryKey: ["/api/shortcuts/popular", limit],
-    queryFn: async () => {
-      try {
-        const response = await fetch(`/api/shortcuts/popular?limit=${limit}`);
-        if (!response.ok) {
-          throw new Error("API not available");
-        }
-        return response.json();
-      } catch (error) {
-        return STATIC_SHORTCUTS.sort((a, b) => b.popularity - a.popularity).slice(0, limit);
-      }
-    },
-  });
-}
+// Export helper functions
+export const getShortcuts = (): Shortcut[] => ALL_SHORTCUTS;
+export const getShortcutsByCategory = (category: string): Shortcut[] => 
+  ALL_SHORTCUTS.filter(s => s.category === category);
+export const getShortcutsByTool = (tool: string): Shortcut[] => 
+  ALL_SHORTCUTS.filter(s => s.tool === tool);
+export const getPopularShortcuts = (limit: number = 10): Shortcut[] => 
+  ALL_SHORTCUTS.sort((a, b) => b.popularity - a.popularity).slice(0, limit);
+export const searchShortcuts = (query: string): Shortcut[] => {
+  const lowerQuery = query.toLowerCase();
+  return ALL_SHORTCUTS.filter(s => 
+    s.title.toLowerCase().includes(lowerQuery) ||
+    s.description.toLowerCase().includes(lowerQuery) ||
+    s.tool.toLowerCase().includes(lowerQuery) ||
+    s.aliases.some(alias => alias.toLowerCase().includes(lowerQuery)) ||
+    s.tags.some(tag => tag.toLowerCase().includes(lowerQuery))
+  );
+};
