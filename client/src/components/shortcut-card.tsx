@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { Copy, Heart } from "lucide-react";
+import { Copy, Heart, Monitor, Apple, Smartphone } from "lucide-react";
+import Keycap from "@/components/keycap";
 import type { Shortcut } from "@shared/schema";
 
 interface ShortcutCardProps {
@@ -66,17 +67,34 @@ export default function ShortcutCard({
         </div>
 
         <div className="flex items-center space-x-2 ml-4">
-          {/* Shortcut combinations */}
-          <div className="flex flex-col space-y-1">
+          {/* OS-specific shortcuts with keycaps */}
+          <div className="flex flex-col space-y-2">
             {shortcut.windowsShortcut && (
-              <code className="bg-gray-200 dark:bg-[var(--dark-card)] px-3 py-1 rounded text-sm font-mono text-gray-700 dark:text-gray-300">
-                {shortcut.windowsShortcut}
-              </code>
+              <div className="flex items-center space-x-2">
+                <div className="os-badge windows">
+                  <Monitor className="h-3 w-3" />
+                  <span>Win</span>
+                </div>
+                <Keycap keys={shortcut.windowsShortcut} os="windows" />
+              </div>
             )}
-            {shortcut.macosShortcut && shortcut.macosShortcut !== shortcut.windowsShortcut && (
-              <code className="bg-gray-200 dark:bg-[var(--dark-card)] px-3 py-1 rounded text-sm font-mono text-gray-700 dark:text-gray-300">
-                {shortcut.macosShortcut}
-              </code>
+            {shortcut.macosShortcut && (
+              <div className="flex items-center space-x-2">
+                <div className="os-badge macos">
+                  <Apple className="h-3 w-3" />
+                  <span>Mac</span>
+                </div>
+                <Keycap keys={shortcut.macosShortcut} os="macos" />
+              </div>
+            )}
+            {shortcut.linuxShortcut && (
+              <div className="flex items-center space-x-2">
+                <div className="os-badge linux">
+                  <Smartphone className="h-3 w-3" />
+                  <span>Linux</span>
+                </div>
+                <Keycap keys={shortcut.linuxShortcut} os="linux" />
+              </div>
             )}
           </div>
 

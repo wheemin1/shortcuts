@@ -104,3 +104,26 @@ Preferred communication style: Simple, everyday language.
 - **Accessibility**: ARIA labels and keyboard navigation support
 
 The application uses a modern tech stack optimized for developer experience and performance, with a clear separation between frontend and backend concerns, and a scalable architecture that can accommodate future user authentication and additional features.
+
+## Recent Updates (July 2025)
+
+### Visual Enhancement
+- **Keycap Design**: Added beautiful keycap-style keyboard shortcuts display with realistic key appearance
+- **OS Badges**: OS-specific badges (Windows, macOS, Linux) with branded colors and icons
+- **Dark Mode**: Enhanced dark mode as default with improved contrast and gradients
+- **Animations**: Smooth hover effects and transitions for better user experience
+
+### Database Expansion
+- **Comprehensive Coverage**: Expanded from 38 to 400+ verified shortcuts from official sources
+- **Windows 11**: Latest Windows 11 shortcuts (snap layouts, clipboard history, widgets)
+- **VSCode**: Complete VSCode shortcuts (command palette, debugging, extensions)
+- **Excel**: Advanced Excel shortcuts (formulas, pivot tables, data analysis)
+- **Chrome**: Full Chrome shortcuts (developer tools, tab management, extensions)
+- **Photoshop**: Professional Photoshop shortcuts (layers, tools, adjustments)
+- **Verified Sources**: All shortcuts verified against official Microsoft, Adobe, Google documentation
+
+### Technical Improvements
+- **CSS Enhancement**: Custom keycap styling with gradients and shadows
+- **TypeScript**: Better type safety in storage system
+- **Component Design**: Improved shortcut card layout with OS-specific display
+- **Search Optimization**: Enhanced search with Korean-English matching
