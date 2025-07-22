@@ -4,6 +4,7 @@ import Sidebar from "@/components/sidebar";
 import PopularShortcuts from "@/components/popular-shortcuts";
 import ToolSection from "@/components/tool-section";
 import Toast from "@/components/toast";
+import { SEO } from "@/components/seo";
 import { useShortcuts } from "@/hooks/use-shortcuts";
 import { useFavorites } from "@/hooks/use-favorites";
 import { useSearch } from "@/hooks/use-search";
@@ -119,7 +120,13 @@ export default function Home() {
   }
 
   return (
-    <div className={`min-h-screen bg-gray-50 dark:bg-[var(--dark)] transition-colors duration-300 ${isDarkMode ? 'dark' : ''}`}>
+    <>
+      <SEO 
+        title="단축키모아 - Windows, macOS, Linux 단축키 모음 앱"
+        description="단축키모아로 Windows, macOS, Linux 숨겨진 단축키를 한눈에 확인하세요. 생산성 향상을 위한 필수 키보드 숏컷 모음집."
+        keywords="단축키 앱, 생산성 도구, 키보드 숏컷, Windows 단축키, macOS 단축키, Linux 단축키, 개발자 도구, VSCode 단축키, Photoshop 단축키"
+      />
+      <div className={`min-h-screen bg-gray-50 dark:bg-[var(--dark)] transition-colors duration-300 ${isDarkMode ? 'dark' : ''}`}>
       <Header
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -186,6 +193,7 @@ export default function Home() {
         show={showToast}
         onClose={() => setShowToast(false)}
       />
-    </div>
+      </div>
+    </>
   );
 }

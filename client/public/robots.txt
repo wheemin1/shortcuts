@@ -1,0 +1,30 @@
+User-agent: *
+Allow: /
+
+# 주요 페이지
+Allow: /
+Allow: /search
+Allow: /favorites
+
+# 정적 자원
+Allow: /assets/
+Allow: *.css
+Allow: *.js
+Allow: *.png
+Allow: *.jpg
+Allow: *.jpeg
+Allow: *.gif
+Allow: *.svg
+Allow: *.webp
+Allow: *.ico
+
+# API 엔드포인트는 크롤링 제외
+Disallow: /api/
+
+# 개발/관리 페이지 제외
+Disallow: /.netlify/
+Disallow: /admin/
+Disallow: /test/
+
+# Sitemap 위치
+Sitemap: https://shortcuthub.netlify.app/sitemap.xml
