@@ -4,3 +4,16 @@ dist
 server/public
 vite.config.ts.*
 *.tar.gz
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# Local database
+local.db
+local.db-journal
+
+# OS generated files
+Thumbs.db
+.DS_Store
