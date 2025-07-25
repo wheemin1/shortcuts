@@ -22,22 +22,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Get full shortcuts data with IDs
 const shortcuts = getShortcutsWithIds();
-  },
-  {
-    id: 3,
-    tool: "Visual Studio Code",
-    category: "ide", 
-    title: "명령 팔레트",
-    description: "모든 명령에 빠르게 액세스",
-    windowsShortcut: "Ctrl+Shift+P",
-    macosShortcut: "Cmd+Shift+P",
-    linuxShortcut: "Ctrl+Shift+P",
-    popularity: 90,
-    verified: true,
-    aliases: ["command palette", "명령어"],
-    tags: ["navigation", "command"]
-  }
-];
 
 // API Routes
 app.get('/api/shortcuts', async (req, res) => {

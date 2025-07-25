@@ -31,14 +31,31 @@
 
 ## 🌐 배포
 
-이 프로젝트는 Netlify로 배포되며, 정적 사이트로 작동합니다.
+이 프로젝트는 Netlify로 배포되며, 정적 사이트로 작동합니다. 단축키 데이터는 Netlify Functions를 통해 제공됩니다.
 
 ### 로컬 개발
 
 ```bash
+# 클라이언트 개발 모드
+cd client
 npm install
 npm run dev
+
+# Netlify Functions 개발 모드
+netlify dev
 ```
+
+### API 엔드포인트
+
+- `GET /api/shortcuts` - 모든 단축키 목록
+- `GET /api/shortcuts/popular` - 인기 단축키 목록
+- `GET /api/shortcuts/search?q=검색어` - 단축키 검색
+- `GET /api/shortcuts/category/:category` - 카테고리별 단축키
+- `GET /api/shortcuts/tool/:tool` - 도구별 단축키
+- `GET /api/shortcuts/:id` - ID로 단축키 조회
+- `GET /api/tools` - 지원하는 도구 목록
+- `GET /api/categories` - 지원하는 카테고리 목록
+- `GET /api/health` - API 상태 확인
 
 ### 빌드
 
