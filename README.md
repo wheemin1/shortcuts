@@ -1,6 +1,6 @@
 # 단축키모아 - Korean Shortcut Collection
 
-한국어 단축키 수집 웹사이트입니다. 600개 이상의 검증된 단축키를 제공합니다.
+한국어 단축키 수집 웹사이트입니다. 150개 이상의 검증된 단축키를 제공합니다.
 
 ## 🚀 기능
 
@@ -14,20 +14,22 @@
 ## 📱 지원 도구
 
 - **운영체제**: Windows 11, macOS, Linux
-- **개발도구**: Visual Studio Code, 터미널, Git
+- **개발도구**: Visual Studio Code, IntelliJ IDEA, PyCharm, Android Studio, 터미널, Git, Jupyter Notebook
 - **오피스**: Microsoft Excel, Word, PowerPoint
 - **브라우저**: Chrome, Firefox, Safari
-- **디자인**: Photoshop, Figma, Sketch
-- **커뮤니케이션**: Slack, Discord, Zoom
-- **생산성**: Notion, Spotify
+- **디자인/미디어**: Photoshop, Figma, Sketch, Adobe Premiere Pro, Blender
+- **게임 개발**: Unity, Blender
+- **커뮤니케이션**: Slack, Discord, Microsoft Teams, Zoom
+- **생산성**: Notion, JIRA, Obsidian
+- **미디어**: VLC Media Player
 
 ## 🛠️ 기술 스택
 
 - **프론트엔드**: React 18 + TypeScript
 - **스타일링**: Tailwind CSS + shadcn/ui
 - **빌드**: Vite
-- **배포**: Netlify
-- **데이터**: 600+ 공식 문서 검증 단축키
+- **배포**: Netlify + Netlify Functions
+- **데이터**: 150+ 공식 문서 검증 단축키
 
 ## 🌐 배포
 
