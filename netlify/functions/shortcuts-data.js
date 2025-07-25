@@ -1,5 +1,6 @@
 // Shortcuts data extracted from server/storage.ts
 import { additionalShortcuts } from './additional-shortcuts.js';
+import { moreShortcuts } from './more-shortcuts.js';
 
 export const shortcutsData = [
   // Windows OS
@@ -1587,7 +1588,7 @@ export const shortcutsData = [
 // 각 단축키에 ID 추가하는 헬퍼 함수
 export const getShortcutsWithIds = () => {
   // 기존 단축키와 추가 단축키 결합
-  const combinedShortcuts = [...shortcutsData, ...additionalShortcuts];
+  const combinedShortcuts = [...shortcutsData, ...additionalShortcuts, ...moreShortcuts];
   
   return combinedShortcuts.map((shortcut, index) => ({
     id: index + 1,
