@@ -1,5 +1,6 @@
 import express from 'express';
 import serverless from 'serverless-http';
+import { getShortcutsWithIds } from './shortcuts-data.js';
 
 const app = express();
 
@@ -19,35 +20,8 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Simple test data
-const testShortcuts = [
-  {
-    id: 1,
-    tool: "Windows",
-    category: "os",
-    title: "복사",
-    description: "선택한 항목을 클립보드에 복사",
-    windowsShortcut: "Ctrl+C",
-    macosShortcut: "Cmd+C",
-    linuxShortcut: "Ctrl+C",
-    popularity: 100,
-    verified: true,
-    aliases: ["copy", "복사하기"],
-    tags: ["clipboard", "basic"]
-  },
-  {
-    id: 2,
-    tool: "Windows", 
-    category: "os",
-    title: "붙여넣기",
-    description: "클립보드의 내용을 붙여넣기",
-    windowsShortcut: "Ctrl+V",
-    macosShortcut: "Cmd+V", 
-    linuxShortcut: "Ctrl+V",
-    popularity: 95,
-    verified: true,
-    aliases: ["paste", "붙여넣기"],
-    tags: ["clipboard", "basic"]
+// Get full shortcuts data with IDs
+const shortcuts = getShortcutsWithIds();
   },
   {
     id: 3,
@@ -68,7 +42,7 @@ const testShortcuts = [
 // API Routes
 app.get('/api/shortcuts', async (req, res) => {
   try {
-    res.json(testShortcuts);
+    res.json(shortcuts);
   } catch (error) {
     console.error('Error fetching shortcuts:', error);
     res.status(500).json({ error: 'Failed to fetch shortcuts' });
@@ -77,7 +51,9 @@ app.get('/api/shortcuts', async (req, res) => {
 
 app.get('/api/shortcuts/popular', async (req, res) => {
   try {
-    res.json(testShortcuts.slice(0, 2));
+    // 인기도(popularity)에 따라 정렬하고 상위 10개 반환
+    const popular = [...shortcuts].sort((a, b) => b.popularity - a.popularity).slice(0, 10);
+    res.json(popular);
   } catch (error) {
     console.error('Error fetching popular shortcuts:', error);
     res.status(500).json({ error: 'Failed to fetch popular shortcuts' });
@@ -90,9 +66,10 @@ app.get('/api/shortcuts/search', async (req, res) => {
     if (!q) {
       return res.status(400).json({ error: 'Search query is required' });
     }
-    const filtered = testShortcuts.filter(s => 
+    const filtered = shortcuts.filter(s => 
       s.title.toLowerCase().includes(q.toLowerCase()) ||
-      s.description.toLowerCase().includes(q.toLowerCase())
+      s.description.toLowerCase().includes(q.toLowerCase()) ||
+      (s.aliases && s.aliases.some(alias => alias.toLowerCase().includes(q.toLowerCase())))
     );
     res.json(filtered);
   } catch (error) {
@@ -104,7 +81,7 @@ app.get('/api/shortcuts/search', async (req, res) => {
 app.get('/api/shortcuts/category/:category', async (req, res) => {
   try {
     const { category } = req.params;
-    const filtered = testShortcuts.filter(s => s.category === category);
+    const filtered = shortcuts.filter(s => s.category === category);
     res.json(filtered);
   } catch (error) {
     console.error('Error fetching shortcuts by category:', error);
@@ -115,7 +92,7 @@ app.get('/api/shortcuts/category/:category', async (req, res) => {
 app.get('/api/shortcuts/tool/:tool', async (req, res) => {
   try {
     const { tool } = req.params;
-    const filtered = testShortcuts.filter(s => s.tool === tool);
+    const filtered = shortcuts.filter(s => s.tool === tool);
     res.json(filtered);
   } catch (error) {
     console.error('Error fetching shortcuts by tool:', error);
@@ -123,9 +100,50 @@ app.get('/api/shortcuts/tool/:tool', async (req, res) => {
   }
 });
 
+// 추가 API 엔드포인트
+app.get('/api/shortcuts/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const shortcut = shortcuts.find(s => s.id === parseInt(id));
+    if (!shortcut) {
+      return res.status(404).json({ error: 'Shortcut not found' });
+    }
+    res.json(shortcut);
+  } catch (error) {
+    console.error('Error fetching shortcut by ID:', error);
+    res.status(500).json({ error: 'Failed to fetch shortcut' });
+  }
+});
+
+app.get('/api/tools', async (req, res) => {
+  try {
+    // 중복 제거된 도구 목록 반환
+    const tools = [...new Set(shortcuts.map(s => s.tool))];
+    res.json(tools);
+  } catch (error) {
+    console.error('Error fetching tools:', error);
+    res.status(500).json({ error: 'Failed to fetch tools' });
+  }
+});
+
+app.get('/api/categories', async (req, res) => {
+  try {
+    // 중복 제거된 카테고리 목록 반환
+    const categories = [...new Set(shortcuts.map(s => s.category))];
+    res.json(categories);
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    res.status(500).json({ error: 'Failed to fetch categories' });
+  }
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    shortcuts: shortcuts.length
+  });
 });
 
 // Export handler for Netlify Functions
