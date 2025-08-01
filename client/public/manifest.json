@@ -1,13 +1,13 @@
 {
-  "name": "단축키모아 - 생산성 단축키 앱",
+  "name": "단축키모아 - 230개 이상 검증된 키보드 단축키 모음",
   "short_name": "단축키모아",
-  "description": "Windows, macOS, Linux 모든 단축키를 한 곳에서 확인하세요",
+  "description": "Windows, macOS, Linux의 VSCode, Excel, Photoshop 등 주요 프로그램 230개 이상의 검증된 키보드 단축키를 무료로 제공하는 생산성 도구",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#3b82f6",
   "orientation": "portrait-primary",
-  "categories": ["productivity", "utilities", "developer"],
+  "categories": ["productivity", "utilities", "developer", "education"],
   "lang": "ko",
   "icons": [
     {

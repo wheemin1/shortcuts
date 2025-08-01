@@ -18,6 +18,23 @@ Allow: *.svg
 Allow: *.webp
 Allow: *.ico
 
+# Sitemap 위치
+Sitemap: https://shortcuthub.netlify.app/sitemap.xml
+
+# 크롤링 속도 조절
+Crawl-delay: 1
+
+# API 및 내부 경로 차단
+Disallow: /api/
+Disallow: /_next/
+Disallow: /*.json$
+Disallow: /netlify/
+
+# 검색엔진 최적화를 위한 중요 경로 명시
+Allow: /shortcuts/
+Allow: /categories/
+Allow: /tools/
+
 # API 엔드포인트는 크롤링 제외
 Disallow: /api/
 
