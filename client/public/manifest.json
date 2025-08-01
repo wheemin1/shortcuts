@@ -1,7 +1,7 @@
 {
   "name": "단축키모아 - 230개 이상 검증된 키보드 단축키 모음",
   "short_name": "단축키모아",
-  "description": "Windows, macOS, Linux의 VSCode, Excel, Photoshop 등 주요 프로그램 230개 이상의 검증된 키보드 단축키를 무료로 제공하는 생산성 도구",
+  "description": "Windows, macOS, Linux의 VSCode, Visual Studio, IntelliJ IDEA, PyCharm, Android Studio, Sublime Text, Excel, Word, PowerPoint, Photoshop, Illustrator, Premiere Pro, Chrome, Firefox, Blender, Unity, AutoCAD, JIRA, Slack, Teams, Zoom, Docker, Figma, Notion, Obsidian 등 230개 이상의 검증된 키보드 단축키를 무료로 제공하는 생산성 도구",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
